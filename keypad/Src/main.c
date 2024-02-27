@@ -80,49 +80,121 @@ int main(void)
 	*pPinBOutReg |= 1 << 13;
 	*pPinBOutReg |= 1 << 15;
 
-	// Make ROW1 LOW and read button press
-	*pPinEOutReg &= ~(1 << 15);
+	while(1) {
+		// Make ROW1 LOW and read button press for COLUMN 1
+		*pPinEOutReg &= ~(1 << 15);
 
-	readColumnState(*pPinEInReg);
+		readColumnState(pPinEInReg);
 
-	// Make ROW2 LOW and read button press
-	*pPinBOutReg &= ~(1 << 11);
+		// Make ROW2 LOW and read button press for COLUMN 2
+		*pPinBOutReg &= ~(1 << 11);
 
-	readColumnState(*pPinEInReg);
+		readColumnState(pPinEInReg);
 
-	// Make ROW3 LOW and read button press
-	*pPinBOutReg &= ~(1 << 13);
+		// Make ROW3 LOW and read button press for COLUMN 3
+		*pPinBOutReg &= ~(1 << 13);
 
-	readColumnState(*pPinEInReg);
+		readColumnState(pPinEInReg);
 
-	// Make ROW4 LOW and read button press
-	*pPinBOutReg &= ~(1 << 15);
+		// Make ROW4 LOW and read button press for COLUMN 4
+		*pPinBOutReg &= ~(1 << 15);
 
-	readColumnState(*pPinEInReg);
+		readColumnState(pPinEInReg);
+	}
 }
 
 void readColumnState(volatile uint32_t *const pPinEInReg) {
-	if((*pPinEInReg & (1 << 7)) == 0) {
-		delay();
-		printf("1");
-	}
+	for(uint8_t column = 1; column <= 4; column++) {
+		if(column == 1) {
+			if((*pPinEInReg & (1 << 7)) == 0) {
+				delay();
+				printf("1");
+			}
 
-	if((*pPinEInReg & (1 << 9)) == 0) {
-		delay();
-		printf("2");
-	}
+			if((*pPinEInReg & (1 << 9)) == 0) {
+				delay();
+				printf("4");
+			}
 
-	if((*pPinEInReg & (1 << 11)) == 0) {
-		delay();
-		printf("3");
-	}
+			if((*pPinEInReg & (1 << 11)) == 0) {
+				delay();
+				printf("7");
+			}
 
-	if((*pPinEInReg & (1 << 13)) == 0) {
-		delay();
-		printf("4");
+			if((*pPinEInReg & (1 << 13)) == 0) {
+				delay();
+				printf("*");
+			}
+		}
+
+		if(column == 2) {
+			if((*pPinEInReg & (1 << 7)) == 0) {
+				delay();
+				printf("2");
+			}
+
+			if((*pPinEInReg & (1 << 9)) == 0) {
+				delay();
+				printf("5");
+			}
+
+			if((*pPinEInReg & (1 << 11)) == 0) {
+				delay();
+				printf("8");
+			}
+
+			if((*pPinEInReg & (1 << 13)) == 0) {
+				delay();
+				printf("0");
+			}
+		}
+
+		if(column == 3) {
+			if((*pPinEInReg & (1 << 7)) == 0) {
+				delay();
+				printf("3");
+			}
+
+			if((*pPinEInReg & (1 << 9)) == 0) {
+				delay();
+				printf("6");
+			}
+
+			if((*pPinEInReg & (1 << 11)) == 0) {
+				delay();
+				printf("9");
+			}
+
+			if((*pPinEInReg & (1 << 13)) == 0) {
+				delay();
+				printf("#");
+			}
+		}
+
+		if(column == 4) {
+			if((*pPinEInReg & (1 << 7)) == 0) {
+				delay();
+				printf("A");
+			}
+
+			if((*pPinEInReg & (1 << 9)) == 0) {
+				delay();
+				printf("B");
+			}
+
+			if((*pPinEInReg & (1 << 11)) == 0) {
+				delay();
+				printf("C");
+			}
+
+			if((*pPinEInReg & (1 << 13)) == 0) {
+				delay();
+				printf("D");
+			}
+		}
 	}
 }
 
 void delay() {
-	for(uint8_t i = 0; i <= 20000; i++);	//delay
+	for(uint8_t i = 0; i <= 300000; i++);	//delay
 }
