@@ -1,0 +1,4 @@
+../Src/main.c:30:5:main	5
+../Src/main.c:69:6:wait	1
+../Src/main.c:73:6:printArray	2
+../Src/main.c:81:6:swap	4
